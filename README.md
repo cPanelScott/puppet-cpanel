@@ -20,11 +20,14 @@ Allows you to pass a set options to update the /etc/wwacct.conf file
 Allows you to add/remove a cpanel account. You must use the cpanel::baseconfig
 resource type when using this resource type.
 
-Examples:
+Examples
+--------
+
     cpanel::easyapache { 'puppet':
         source => 'puppet:///modules/basenode/puppet.yaml',
         email  => 'scott@cpanel.net'
     }
+
     cpanel::tweaksetting { 'puppet':
         options => {
                      'skipantirelayd'   => 1,
@@ -32,12 +35,14 @@ Examples:
                    },
         email   => 'scott@cpanel.net'
     }
+
     cpanel::baseconfig { 'puppet':
         host         => 'test.cpanel.net',
         ns           => 'test-a.cpanel.net',
         ns2          => 'test-b.cpanel.net',
         contactemail => 'scott@cpanel.net'
     }
+
     cpanel::cpanelaccount{ 'puppet':
         email       => 'scott@cpanel.net',
         domain      => 'thisisabar.com',
