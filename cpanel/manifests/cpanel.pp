@@ -15,20 +15,25 @@ class cpanel {
             unless      => '/bin/ps ax | /bin/grep -v grep | /bin/grep easyapache > /dev/null'
         }
     }
-    define tweaksetting( $source, $email ) {
-        file { '/var/cpanel/cpanel.config':
-            owner  => 'root',
-            group  => 'root',
-            mode   => 0644,
-            notify => Exec['runtweaksetting'],
-            source => $source
+    define tweaksetting( $options, $email ) {
+        internalupdatecpanelconfig { [ hash_keys($options) ]:
+            options => $options
         }
         exec{ 'runtweaksetting':
             command     => $email ? { ''      => '/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings 2>&1 >/dev/null',
-                                         default => "/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings 2>&1 | /bin/mail -s 'Tweak Settings Run' $email &" },
+                                      default => "/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings 2>&1 | /bin/mail -s 'Tweak Settings Run' $email &" },
             refreshonly => true,
             user        => 'root',
             unless      => '/bin/ps ax | /bin/grep -v grep | /bin/grep updatetweaksettings > /dev/null'
+        }
+    }
+    define internalupdatecpanelconfig( $options ) {
+        augeas { $title:
+            lens    => 'PHP.lns',
+            incl    => '/var/cpanel/cpanel.config',
+            context => '/files/var/cpanel/cpanel.config/.anon',
+            changes => "set ${title} ${options[$title]}",
+            notify  => Exec['runtweaksetting']
         }
     }
     define baseconfig(

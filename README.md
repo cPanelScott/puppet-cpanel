@@ -8,9 +8,9 @@ Here is a list available Resource Types:
 cpanel::easyapache -- Allows you to pass a EasyApache YAML stored config, and
                       automatically trigger an easyapache recompile if a change
                       is detected with the configuration file.
-cpanel::tweaksettings -- Allows you to pass a cpanel.config file and
-                         automatically updated your tweak setting if a change
-                         is detected.
+cpanel::tweaksettings -- Allows you to pass a key => value pairs for the
+                         cpanel.config file and automatically updates your tweak
+                         setting if a change is detected.
 cpanel::baseconfig -- Allows you to pass a set options to update the
                       /etc/wwacct.conf file
 cpanel::cpanelaccount -- Allows you to add/remove a cpanel account. You must
@@ -23,8 +23,11 @@ Examples:
         email  => 'scott@cpanel.net'
     }
     cpanel::tweaksetting { 'puppet':
-        source => 'puppet:///modules/basenode/cpanel.config',
-        email  => 'scott@cpanel.net'
+        options => {
+                     'skipantirelayd'   => 1,
+                     'jaildefaultshell' => 0,
+                   },
+        email   => 'scott@cpanel.net'
     }
     cpanel::baseconfig { 'puppet':
         host         => 'test.cpanel.net',
@@ -53,13 +56,13 @@ Complete set of options:
 
     cpanel::tweaksetting { 'resource title':
         #Required parameters
-        source => #A cpanel tweak settings config file. This is typicallly
-                  #found at /var/cpanel/cpanel.config
-                  #See documentation for the source parameter in the file
-                  #resource for more specification information.
+        options => #A hash of keys and values for the cpanel.config file. Take
+                   #a look at your /var/cpanel/cpanel.config for a list of the
+                   #available keys. See the tweak settings WHM page for some
+                   #hints as to which key does what
         #Optional Parameters
-        email  => #An E-Mail address where the output from the easyapache
-                  #should be sent
+        email   => #An E-Mail address where the output from the easyapache
+                   #should be sent
     }
     cpanel::baseconfig { 'resource title':
         #See
