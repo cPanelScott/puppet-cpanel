@@ -1,35 +1,35 @@
 class cpanel {
     define easyapache( $source, $email = '' ) {
         file { '/var/cpanel/easy/apache/profile/custom/puppet.yaml':
-	    owner  => 'root',
-	    group  => 'root',
-	    mode   => 0644,
-	    notify => Exec['runeasyapache'],
-	    source => $source
-	}
-	exec { 'runeasyapache':
-	    command     => $email ? { ''      => '/usr/local/cpanel/scripts/easyapache --profile=puppet --build 2>&1 >/dev/null',
-	                              default => "/usr/local/cpanel/scripts/easyapache --profile=puppet --build 2>&1 | /bin/mail -s 'EasyApache Run' $email &" },
-	    refreshonly => true,
-	    user        => 'root',
+            owner  => 'root',
+            group  => 'root',
+            mode   => 0644,
+            notify => Exec['runeasyapache'],
+            source => $source
+        }
+        exec { 'runeasyapache':
+            command     => $email ? { ''      => '/usr/local/cpanel/scripts/easyapache --profile=puppet --build 2>&1 >/dev/null',
+                                      default => "/usr/local/cpanel/scripts/easyapache --profile=puppet --build 2>&1 | /bin/mail -s 'EasyApache Run' $email &" },
+            refreshonly => true,
+            user        => 'root',
             unless      => '/bin/ps ax | /bin/grep -v grep | /bin/grep easyapache > /dev/null'
-	}
+        }
     }
     define tweaksetting( $source, $email ) {
-	file { '/var/cpanel/cpanel.config':
-	    owner  => 'root',
-	    group  => 'root',
-	    mode   => 0644,
+        file { '/var/cpanel/cpanel.config':
+            owner  => 'root',
+            group  => 'root',
+            mode   => 0644,
             notify => Exec['runtweaksetting'],
-	    source => $source
-	}
-	exec{ 'runtweaksetting':
-	    command     => $email ? { ''      => '/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings 2>&1 >/dev/null',
-		   		      default => "/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings 2>&1 | /bin/mail -s 'Tweak Settings Run' $email &" },
-	    refreshonly => true,
-	    user        => 'root',
-	    unless      => '/bin/ps ax | /bin/grep -v grep | /bin/grep updatetweaksettings > /dev/null'
-	}
+            source => $source
+        }
+        exec{ 'runtweaksetting':
+            command     => $email ? { ''      => '/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings 2>&1 >/dev/null',
+                                         default => "/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings 2>&1 | /bin/mail -s 'Tweak Settings Run' $email &" },
+            refreshonly => true,
+            user        => 'root',
+            unless      => '/bin/ps ax | /bin/grep -v grep | /bin/grep updatetweaksettings > /dev/null'
+        }
     }
     define baseconfig(
         $host,
@@ -60,7 +60,7 @@ class cpanel {
     }
 
     define cpanelaccount(
-	$ensure        = 'present',
+        $ensure        = 'present',
         $email         = '',
         $domain,
         $user,
@@ -86,23 +86,23 @@ class cpanel {
         $language      = 'english',
         $use_registered_nameservers = 0 ) {
 
-	if $ensure == 'present' {
+        if $ensure == 'present' {
             exec { "add-$user":
-	        command => $email ? { ''      => "/usr/local/cpanel/scripts/wwwacct $domain $user $pass $quota $theme $has_ip $has_cgi $has_frontpage $maxftp $maxsql $maxpop $maxlist $maxsub $bwlimit $has_shell $owner $plan $maxpark $maxaddon $featurelist $contactemail $use_registered_nameservers $language",
+                command => $email ? { ''      => "/usr/local/cpanel/scripts/wwwacct $domain $user $pass $quota $theme $has_ip $has_cgi $has_frontpage $maxftp $maxsql $maxpop $maxlist $maxsub $bwlimit $has_shell $owner $plan $maxpark $maxaddon $featurelist $contactemail $use_registered_nameservers $language",
                                       default => "/usr/local/cpanel/scripts/wwwacct $domain $user $pass $quota $theme $has_ip $has_cgi $has_frontpage $maxftp $maxsql $maxpop $maxlist $maxsub $bwlimit $has_shell $owner $plan $maxpark $maxaddon $featurelist $contactemail $use_registered_nameservers $language 2>&1 | /bin/mail -s 'Add Account for $user' $email &" },
-	        user    => 'root',
-	        unless  => [ "/bin/grep ^$domain: /etc/userdomains > /dev/null",
+                user    => 'root',
+                unless  => [ "/bin/grep ^$domain: /etc/userdomains > /dev/null",
                              "/bin/grep ' $user$' /etc/userdomains > /dev/null" ],
                 require => File['/etc/wwwacct.conf']
-	    }
+            }
         } elsif $ensure == 'absent' {
-	    exec { "remove-$user":
-		command => $email ? { ''      => "/usr/local/cpanel/scripts/killacct --force $user",
-				      default => "/usr/local/cpanel/scripts/killacct --force $user 2>&1 | /bin/mail -s 'Remove account for $user' $email &" },
-		user    => 'root',
-		onlyif  => "/bin/grep ' $user$' /etc/userdomains | /bin/grep ^$domain: >/dev/null",
-		require => File['/etc/wwwacct.conf']
-	    }
-	}
+            exec { "remove-$user":
+                command => $email ? { ''      => "/usr/local/cpanel/scripts/killacct --force $user",
+                                      default => "/usr/local/cpanel/scripts/killacct --force $user 2>&1 | /bin/mail -s 'Remove account for $user' $email &" },
+                user    => 'root',
+                onlyif  => "/bin/grep ' $user$' /etc/userdomains | /bin/grep ^$domain: >/dev/null",
+                require => File['/etc/wwwacct.conf']
+            }
+        }
     }
 }
