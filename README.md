@@ -6,12 +6,12 @@ control various aspects of cPanel in an automated fashion through Puppet.
 Here is a list available Resource Types:
 
 ###cpanel::easyapache
-Allows you to pass a EasyApache YAML stored config, and automatically trigger a
-n easyapache recompile if a change is detected with the configuration file.
+Allows you to pass a EasyApache YAML stored config, and automatically trigger an
+easyapache recompile if a change is detected with the configuration file.
 
 ###cpanel::tweaksettings
-Allows you to pass a key => value pairs for the cpanel.config file and
-automatically updates your tweak setting if a change is detected.
+Allows you to pass key => value pairs for the cpanel.config file and
+automatically updates your tweak settings if a change is detected.
 
 ###cpanel::baseconfig
 Allows you to pass a set options to update the /etc/wwacct.conf file
