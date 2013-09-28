@@ -43,6 +43,8 @@ Examples
         contactemail => 'scott@cpanel.net'
     }
 
+    #Make sure to include a cpanel::baseconfig resource when using
+    #cpanel::cpanelaccount
     cpanel::cpanelaccount{ 'puppet':
         email       => 'scott@cpanel.net',
         domain      => 'thisisabar.com',
