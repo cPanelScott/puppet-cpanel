@@ -5,17 +5,20 @@ This module provides the following new Resource Types that enable you to
 control various aspects of cPanel in an automated fashion through Puppet.
 Here is a list available Resource Types:
 
-cpanel::easyapache -- Allows you to pass a EasyApache YAML stored config, and
-                      automatically trigger an easyapache recompile if a change
-                      is detected with the configuration file.
-cpanel::tweaksettings -- Allows you to pass a key => value pairs for the
-                         cpanel.config file and automatically updates your tweak
-                         setting if a change is detected.
-cpanel::baseconfig -- Allows you to pass a set options to update the
-                      /etc/wwacct.conf file
-cpanel::cpanelaccount -- Allows you to add/remove a cpanel account. You must
-                         use the cpanel::baseconfig resource type when using
-                         this resource type.
+*cpanel::easyapache*
+Allows you to pass a EasyApache YAML stored config, and automatically trigger a
+n easyapache recompile if a change is detected with the configuration file.
+
+*cpanel::tweaksettings*
+Allows you to pass a key => value pairs for the cpanel.config file and
+automatically updates your tweak setting if a change is detected.
+
+*cpanel::baseconfig*
+Allows you to pass a set options to update the /etc/wwacct.conf file
+
+*cpanel::cpanelaccount*
+Allows you to add/remove a cpanel account. You must use the cpanel::baseconfig
+resource type when using this resource type.
 
 Examples:
     cpanel::easyapache { 'puppet':
