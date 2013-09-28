@@ -50,7 +50,9 @@ Examples
         ensure      => 'absent'
     }
 
-Complete set of options:
+Complete set of options
+-----------------------
+
     cpanel::easyapache { 'resource title':
         #Required Parameters
         source => #An easyapache stored configuration YAML. Examples can be
@@ -72,9 +74,10 @@ Complete set of options:
         email   => #An E-Mail address where the output from the easyapache
                    #should be sent
     }
+
     cpanel::baseconfig { 'resource title':
         #See
-#http://docs.cpanel.net/twiki/bin/view/AllDocumentation/InstallationGuide/AdvancedOptions#The%20/etc/wwwacct.conf%20file
+        #http://docs.cpanel.net/twiki/bin/view/AllDocumentation/InstallationGuide/AdvancedOptions#The%20/etc/wwwacct.conf%20file
         #for additional documentation on the /etc/wwwacct.conf file for more
         #info
 
@@ -111,6 +114,7 @@ Complete set of options:
         scriptalias     => #Whether a cgi-bin directory should be creared with
                            #new accounts. Default is y
     }
+
     cpanel::cpanelaccount { 'Resource Title':
         #Note: Does not run if an account with the same username or domain name
         #      already exists
