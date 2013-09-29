@@ -14,7 +14,7 @@ class basenode {
 #    }
 #    cpanel::tweaksetting { 'puppet':
 #        options => { 
-#                     'ftpserver'  => 'pure-ftpd',
+#                     'ftpserver'  => 'proftpd',
 #                     'mailserver' => 'dovecot'
 #                   },
 #	email   => 'some@example.com'
