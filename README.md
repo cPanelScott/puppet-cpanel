@@ -20,6 +20,9 @@ Allows you to pass a set options to update the /etc/wwacct.conf file
 Allows you to add/remove a cpanel account. You must use the cpanel::baseconfig
 resource type when using this resource type.
 
+Note: A /bin/mail package needs to be installed for the email parameter to work
+If in doubt, run yum install mailx
+
 Examples
 --------
 
