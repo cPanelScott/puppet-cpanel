@@ -20,7 +20,6 @@ class basenode {
 #	email   => 'some@example.com'
 #    }
 #    cpanel::baseconfig { 'puppet':
-#        host         => 'test.cpanel.net',
 #        ns           => 'test-a.cpanel.net',
 #        ns2          => 'test-b.cpanel.net',
 #        contactemail => 'some@example.com'

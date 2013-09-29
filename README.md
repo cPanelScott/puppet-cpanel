@@ -40,7 +40,6 @@ Examples
     }
 
     cpanel::baseconfig { 'puppet':
-        host         => 'test.cpanel.net',
         ns           => 'test-a.cpanel.net',
         ns2          => 'test-b.cpanel.net',
         contactemail => 'scott@cpanel.net'
@@ -87,11 +86,11 @@ Complete set of options
         #info
 
         #Required Parameters
-        host         => #Hostname of server,
         ns           => #First name server for domains created with cPanel
         ns2,         => #Second name server for domains created with cPanel
         contactemail => #E-Mail address cPanel sends notifications to
         #Optional Parameters
+        host            => #Hostname of server. Default: Uses $hostname facter
         logstyle        => #Apache LogFormat. Default: combined
         ns4             => #Foruth name server for domains created with cPanel
                            #Default: (empty string)

@@ -37,10 +37,10 @@ class cpanel {
         }
     }
     define baseconfig(
-        $host,
         $ns,
         $ns2,
         $contactemail,
+        $host            = $hostname,
         $logstyle        = 'combined',
         $ns4             = '',
         $nsttl           = '86400',
