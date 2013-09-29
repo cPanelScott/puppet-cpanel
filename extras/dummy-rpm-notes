@@ -1,0 +1,4 @@
+-The Dummy RPM is provided as-is
+-Dummy RPMs, like this one, are designed to mislead the OS into thinking stuff is installed, leading to unknown behavior
+-You will forget. No one thinks to look for dummy RPMs
+-Uninstallation of the dummy RPM will likely require you to use the --force and --nodeps flag with rpm

@@ -1,0 +1,14 @@
+This file is provided to make it easier for presentation participants to copy
+and paste key commands durring the presentation. Each command here is numbered,
+and that same number corresponds with the number beside each command on the
+slides.
+
+1. rpm -ivh /root/puppet-cpanel/extras/dummy-ruby-0.002-1.noarch.rpm
+2. rpm -ivh http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
+3. yum --disableexcludes=main install puppet
+4. cp -a /root/puppet-cpanel/cpanel /etc/puppet/modules
+5. cp -a /root/puppet-cpanel/extras/manifests /etc/puppet
+6. cp -a /root/puppet-cpanel/extras/basenode /etc/puppet/modules
+7. puppet apply /etc/puppet/manifests/site.pp
+8. ln -s /usr/lib64/ruby/site_ruby/1.8/x86_64-linux/_augeas.so /usr/lib/ruby/site_ruby/1.8/x86_64-linux/_augeas.so
+9. http://projects.puppetlabs.com/projects/1/wiki/simplest_puppet_install_pattern
