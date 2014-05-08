@@ -12,6 +12,7 @@ easyapache recompile if a change is detected with the configuration file.
 ###cpanel::tweaksettings
 Allows you to pass key => value pairs for the cpanel.config file and
 automatically updates your tweak settings if a change is detected.
+(note: some keys in the cpanel.config do not have values, this puppet module does not support those options at this time)
 
 ###cpanel::baseconfig
 Allows you to pass a set options to update the /etc/wwacct.conf file
