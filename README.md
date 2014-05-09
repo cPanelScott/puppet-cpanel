@@ -39,6 +39,16 @@ Examples
                    },
         email   => 'scott@cpanel.net'
     }
+    
+    cpanel::updatephpini { 'puppet':
+        options => {
+            'post_max_size'         => '64M',
+            'max_execution_time'    => '60',
+            'memory_limit'          => '96M',
+            'max_input_time'        => '60',
+            'upload_max_filesize'   => '64M',
+        },
+    }
 
     cpanel::baseconfig { 'puppet':
         ns           => 'test-a.cpanel.net',

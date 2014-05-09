@@ -43,6 +43,24 @@ class cpanel {
             require => File['/usr/share/augeas/lenses/dist/cpanel.aug'],
         }
     }
+    define updatephpini ( $options ) {
+        internalupdatephpini { [ hash_keys($options) ]:
+            options => $options
+        }~>
+        service { 'cpanel_httpd':
+            name    => 'httpd',
+            ensure  => 'true',
+            enable  => 'true',
+        }
+    }
+    define internalupdatephpini( $options ) {
+        augeas { $title:
+            lens    => 'PHP.lns',
+            incl    => '/usr/local/lib/php.ini',
+            context => "/files/usr/local/lib/php.ini/PHP",
+            changes => "set ${title} ${options[$title]}",
+        }
+    }
     define baseconfig(
         $ns,
         $ns2,
