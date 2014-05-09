@@ -12,6 +12,10 @@ easyapache recompile if a change is detected with the configuration file.
 ###cpanel::tweaksettings
 Allows you to pass key => value pairs for the cpanel.config file and
 automatically updates your tweak settings if a change is detected.
+(note: some keys in the cpanel.config do not have values, this puppet module does not support those options at this time)
+
+###cpanel::updatephpini
+Allows you to pass key => value pairs for php.ini and automatically restarts apache to apply the changes only if the values are changed
 
 ###cpanel::baseconfig
 Allows you to pass a set options to update the /etc/wwacct.conf file
@@ -37,6 +41,16 @@ Examples
                      'jaildefaultshell' => 0,
                    },
         email   => 'scott@cpanel.net'
+    }
+    
+    cpanel::updatephpini { 'puppet':
+        options => {
+            'post_max_size'         => '64M',
+            'max_execution_time'    => '60',
+            'memory_limit'          => '96M',
+            'max_input_time'        => '60',
+            'upload_max_filesize'   => '64M',
+        },
     }
 
     cpanel::baseconfig { 'puppet':

@@ -16,6 +16,13 @@ class cpanel {
         }
     }
     define tweaksetting( $options, $email ) {
+        file { '/usr/share/augeas/lenses/dist/cpanel.aug':
+            ensure => 'file',
+            mode   => 644,
+            source => 'puppet:///modules/cpanel/cpanel.aug',
+            owner => 'root',
+            group => 'root',
+        }
         internalupdatecpanelconfig { [ hash_keys($options) ]:
             options => $options
         }
@@ -29,11 +36,29 @@ class cpanel {
     }
     define internalupdatecpanelconfig( $options ) {
         augeas { $title:
-            lens    => 'PHP.lns',
+            lens    => 'CPanel.lns',
             incl    => '/var/cpanel/cpanel.config',
-            context => '/files/var/cpanel/cpanel.config/.anon',
             changes => "set ${title} ${options[$title]}",
-            notify  => Exec['runtweaksetting']
+            notify  => Exec['runtweaksetting'],
+            require => File['/usr/share/augeas/lenses/dist/cpanel.aug'],
+        }
+    }
+    define updatephpini ( $options ) {
+        internalupdatephpini { [ hash_keys($options) ]:
+            options => $options
+        }~>
+        service { 'cpanel_httpd':
+            name    => 'httpd',
+            ensure  => 'true',
+            enable  => 'true',
+        }
+    }
+    define internalupdatephpini( $options ) {
+        augeas { $title:
+            lens    => 'PHP.lns',
+            incl    => '/usr/local/lib/php.ini',
+            context => "/files/usr/local/lib/php.ini/PHP",
+            changes => "set ${title} ${options[$title]}",
         }
     }
     define baseconfig(
